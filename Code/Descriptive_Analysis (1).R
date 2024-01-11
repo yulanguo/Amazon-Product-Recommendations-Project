@@ -65,45 +65,16 @@ giantGraph <- amazon_graph %>%
 
 #Plotting
 ## plot the original network
-plot(amazon_graph, vertex.size = 3, vertex.label = NA,
-     # Settings for layouts:
-     #      Running this command multiple times will produce slightly different networks,
-     #      based on the layout algorithm used. You can swap algorithms by uncommenting one of the
-     #      lines below. Which algorithm works best often depends on the data
-     # layout = layout_nicely(gpt_graph)      ## Automated layout recommendation from iGraph
-     # layout = layout_with_fr(gpt_graph)    ## Fruchterman-Reingold algorithm
-     # layout = layout_with_dh(gpt_graph)    ## Davidson and Harel algorithm
-     # layout = layout_with_drl(gpt_graph)   ## Force-directed algorithm
-     # layout = layout_with_kk(gpt_graph)    ## Spring algorithm
-     # layout = layout_with_lgl(gpt_graph)   ## Large graph layout
-)
+plot(amazon_graph, vertex.size = 3, vertex.label = NA,)
 
 ## plot the largest component of the network
-plot(giantGraph, vertex.size = 3, vertex.label = NA,
-     # Settings for layouts:
-     #      Running this command multiple times will produce slightly different networks,
-     #      based on the layout algorithm used. You can swap algorithms by uncommenting one of the
-     #      lines below. Which algorithm works best often depends on the data
-     # layout = layout_nicely(giantGraph_gpt)      ## Automated layout recommendation from iGraph
-     # layout = layout_with_fr(giantGraph_gpt)    ## Fruchterman-Reingold algorithm
-     # layout = layout_with_dh(giantGraph_gpt)    ## Davidson and Harel algorithm
-     # layout = layout_with_drl(giantGraph_gpt)   ## Force-directed algorithm
-     # layout = layout_with_kk(giantGraph_gpt)    ## Spring algorithm
-     # layout = layout_with_lgl(giantGraph_gpt)   ## Large graph layout
-)
+plot(giantGraph, vertex.size = 3, vertex.label = NA,)
 
-
-# For this part, you switch 'igraph' to 'sna' package because we are going to use 
-# some functions that only are available in sna package
-# As a first step, create a 'sna' graph object from an 'igraph' object
 sna_amazon <- igraph::get.adjacency(amazon_graph, sparse=FALSE) %>% network::as.network.matrix()
 
-# this detaching is a necessary step since the two packages have some same function names
-# R is often confuesed
 detach('package:igraph')
 library(statnet)
 
-# Compute centralities based on 'network' package
 # Calculate in-degree centrality
 idegScores_amazon <- degree(sna_amazon, cmode = 'indegree')
 
@@ -125,18 +96,13 @@ centralities_amazon$incloseness <- igraph::closeness(amazon_graph, mode = 'in')
 centralities_amazon$eigen <- igraph::eigen_centrality(amazon_graph)$vector
 
 # Calculate Burt's network constraint and store it in the data.frame called 'centralities'
-# using 'igraph' because 'sna' doesn't have the function
 centralities_amazon$netconstraint <- igraph::constraint(amazon_graph)
-help(constraint) # Be careful with the interpretation for constraint:
-# High constraint = redundant contacts, low constraint = acting as a broker
+help(constraint) 
 
 # Calculate authority and store it in the data.frame called 'centralities'
-# using 'igraph' because 'sna' doesn't have the function
-# 'igraph::' allows calling for any igraph function without loading the package
 centralities_amazon$authority <- igraph::authority_score(amazon_graph, scale = TRUE)$`vector`
 
 # Calculate hub and store it in the data.frame called 'centralities'
-# using 'igraph' because 'sna' doesn't have the function
 centralities_amazon$hub <- igraph::hub_score(amazon_graph, scale = TRUE)$`vector`
 
 View(centralities_amazon)
@@ -146,8 +112,6 @@ View(centralities_amazon)
 # Global Network Properties
 #
 ######################################################################################
-# To go back to igraph analysis, don't forget detaching 'sna' and 'network' first
-# before recalling 'igraph'
 detach('package:statnet', unload = TRUE)
 library(igraph)
 
@@ -172,7 +136,6 @@ amazon_graph %>%
   )
 
 # Plot the number of clusters in the graph and their size
-# We will use walktrap because this is a directed graph
 cluster_amazon <- amazon_graph %>% cluster_walktrap()
 
 # modularity measure
@@ -183,11 +146,9 @@ membership(cluster_amazon)   # affiliation list
 length(cluster_amazon) # number of clusters
 
 # Find the size the each cluster 
-# Note that communities with one node are isolates, or have only a single tie
 sizes(cluster_amazon) 
 
 # Visualize clusters - that puts colored blobs around the nodes in the same community.
-# You may want to remove vertex.label=NA to figure out what terms are clustered.
 cluster_amazon %>% plot(.,amazon_graph,
                      # layout = layout_with_gem(.),
                      layout = layout_with_fr(amazon_graph),
@@ -222,11 +183,6 @@ amazon_graph %>%
 
 
 # Fit a power law to the degree distribution
-# The output of the power.law.fit() function tells us what the exponent of the power law is ($alpha)
-# and the log-likelihood of the parameters used to fit the power law distribution ($logLik)
-# Also, it performs a Kolmogov-Smirnov test to test whether the given degree distribution could have
-# been drawn from the fitted power law distribution.
-# The function thus gives us the test statistic ($KS.stat) and p-vaule ($KS.p) for that test
 in_power_amazon <- amazon_graph %>% 
   degree.distribution(., mode='in') %>%
   power.law.fit(., xmin=0.00000001)
@@ -277,8 +233,6 @@ abline(v = amazon_graph %>% transitivity(., type = 'average'), col = 'red', lty 
 # this tests whether the observed value is statistically different from the simulated distribution
 t.test(cl.rg_amazon, mu=amazon_graph %>% transitivity(., type = 'average'),
        alternative = 'greater') ## pick either 'less' or 'greater' based on your results
-## (you want to use the one that generates the smaller p-value)
-
 
 
 # plot a histogram of simulated values for average path length + the observed value
