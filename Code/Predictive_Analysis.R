@@ -55,17 +55,12 @@ detach(package:igraph) # Remove the 'igraph' package from your environment.
 library(statnet)
 options(ergm.loglik.warn_dyads=FALSE) #Whether or not a warning should be issued when sample space constraints render the observed number of dyads ill-defined
 
-# Ergm Terms are statistics: They are some deterministic function of the ties, node attributes, and edge covariates of a network.
 help("ergm-terms",package = "ergm") # Documentation that contains definitions for all of the terms we are using
-# ex. what does "mutual" test and how is it calculated
-# We will use the ergm-terms to perform hypothesis testing using ERGMs
-# But we can note that any of the ERGM terms can also be examined directly for your observed network, by creating a formula in R
 
-# Look at Endogenous statistics: terms based on only ties in the advice network
 summary(item ~ edges)                     # Number of edges (ties)
 summary(item ~ mutual)                    # Number of pairs of reciprocated ties
 summary(item ~ odegree(0:5))              # Outdegree distribution. (# of nodes with outdegree of 0, # nodes outdegree of 1, etc.)
-# Remember, respondents could nominate at most five employees in our survey
+
 summary(item ~ idegree(0:65))             # Indegree distribution.
 summary(item ~ gwodegree(log(2),fixed=T)) # One parameter summarizing outdegree distribution - tendency against outdegree hubs
 summary(item ~ gwidegree(log(2),fixed=T)) # One parameters summarizing indegree distribution - tendency against indegree hubs
@@ -77,7 +72,6 @@ summary(item ~ dgwesp(log(2),fixed = T))  # One parameter summarizing
 # The above are statistics - counts of these patterns for our networks
 # What fitting the ERGM model will tell is whether these counts are relatively high/low
 # in comparison to what we would expect based on random chance, controlling for the other effects in our model.
-# This type of analysis can be helpful for understanding your network, as well as troubleshooting issues with ERGM regression
 
 model1 <- ergm(item ~ edges                 # This is  a tendency towards a greater number of advice ties existing. Based on a statistic counting the number of ties.
                # Structural patterns
