@@ -21,7 +21,7 @@
 - **Cluster:** Highly interconnected cluster of 355 nodes and 812 edges was selected.
 - **Components:** 7 components identified; analysis focused on the largest.
 
-## Our Analysis
+## Descriptive Analysis
 
 ### K Core Decomposition
 - **Max k-core:** 6
