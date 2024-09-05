@@ -26,13 +26,13 @@
 ### K Core Decomposition
 - **Max k-core:** 6
 - **Key Nodes:** 16770, 16771, 35897, 35898
-  - These nodes are highly influential and should be top marketing targets.
+  - These nodes are highly influential and should be heavily advertised.
 
 ### Community Structure
 - **Algorithm:** Walktrap
 - **Clusters Identified:** 32
 - **Modularity Score:** 0.8198
-  - Indicates strong community structures; Amazon should group and market these products together.
+  - Indicates strong community structures; Amazon should group and market products within a cluster together.
 
 ### Indegree and Outdegree
 - **Indegree:** Focus recommendations on key connections.
@@ -55,8 +55,8 @@
 
 ### Goodness of Fit
 - **Convergence:** Model converged, indicating usability.
-- **Trace Plots:** Stable around 0, no nonlinear patterns.
-- **Sample Statistic Deviations:** Normally distributed, unimodal with a mean of 0.
+- **Trace Plots:** Stable around 0, no nonlinear patterns, indicating usability.
+- **Sample Statistic Deviations:** Normally distributed, unimodal with a mean of 0, indicating usability.
 - **P-values for Outdegree:** > 0.05, indicating a good fit.
 - **P-values for Indegree:** < 0.05, indicating a poor fit.
 
