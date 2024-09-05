@@ -67,6 +67,3 @@
 4. **Enhance Recommendations:** Suggest items with high eigenvector centrality, indegrees, betweenness centrality, and hub scores.
 5. **Investigate Further:** Obtain product names to refine recommendations and understand why certain items are central in purchasing patterns.
 
-By implementing these strategies, Amazon can significantly boost its sales and customer satisfaction.
-
-
