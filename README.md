@@ -1,8 +1,7 @@
 # Final Project for Social Networks
 
 ## Description
-This project uses social network analysis to recommend website changes that help Amazon improve sales.  
-By analyzing product co-purchasing patterns, the goal is to identify actionable insights that can enhance product visibility and user experience.
+This project uses social network analysis to recommend website changes that help Amazon improve sales. By analyzing product co-purchasing patterns, we aim to identify actionable insights that can enhance product visibility and user navigation.
 
 ## Research Question
 **Can Amazon optimize its sales by leveraging product co-purchasing patterns?**
